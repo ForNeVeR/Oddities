@@ -2,10 +2,6 @@ Oddities [![Status Zero][status-zero]][andivionian-status-classifier]
 ========
 This repository groups several .NET libraries supporting old and obscure data formats.
 
-Project History
----------------
-This project started as part of the game reimplementation [O21][o21]. The original game is an old Windows game (from 3.1 era), and so it was necessary to implement several old Windows data formats to load the game data properly.
-
 Currently, the following data formats are supported:
 - [NE][wikipedia.ne] (aka "New Executable"), 16-bit `.exe` Windows binary.
 - [DIB][microsoft.dib] (device-independent binary), encountered as part of the BMP format and in the NE resource table.
@@ -22,6 +18,12 @@ Documentation
 - [Contributor Guide][docs.contributing]
 - [License (MIT)][docs.license]
 - [Code of Conduct (adapted from the Contributor Covenant)][docs.code-of-conduct]
+
+Project History
+---------------
+This project started as part of the game reimplementation [O21][o21]. The original game is an old Windows game (from the 3.1 era), and so it was necessary to implement several old Windows data formats to load the game data properly.
+
+Since then, the data format support was extracted into a separate library suite that lives in this repository. 
 
 Acknowledgments
 ---------------
