@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="Oddities.MRB" />
+        <InternalsVisibleTo Include="Oddities.NE" />
+        <InternalsVisibleTo Include="Oddities.WinHelp" />
+    </ItemGroup>
+
+</Project>
