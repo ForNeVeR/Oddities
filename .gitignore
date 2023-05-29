@@ -1,3 +1,6 @@
 /.idea/.idea.Oddities/.idea/*
 !/.idea/.idea.Oddities/.idea/dictionaries/
 !/.idea/.idea.Oddities/.idea/inspectionProfiles/
+
+bin/
+obj/
