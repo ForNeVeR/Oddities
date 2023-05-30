@@ -1,4 +1,4 @@
-Oddities [![Status Zero][status-zero]][andivionian-status-classifier]
+Oddities [![Status Ventis][status-ventis]][andivionian-status-classifier]
 ========
 This repository groups several .NET libraries supporting old and obscure data formats.
 
@@ -200,7 +200,7 @@ Acknowledgments
   - Manfred Winterhoff, the author of [the documentation][docs.winhelp],
   - Paul Wise and other contributors of [helpdeco][].
 
-[andivionian-status-classifier]: https://github.com/ForNeVeR/andivionian-status-classifier#status-zero-
+[andivionian-status-classifier]: https://github.com/ForNeVeR/andivionian-status-classifier#status-ventis-
 [book.windows-undocumented-file-formats]: https://a.co/d/dq5fCoj
 [docs.code-of-conduct]: CODE_OF_CONDUCT.md
 [docs.contributing]: CONTRIBUTING.md
@@ -213,5 +213,5 @@ Acknowledgments
 [microsoft.dib]: https://learn.microsoft.com/en-us/windows/win32/gdi/device-independent-bitmaps
 [microsoft.ne]: https://jeffpar.github.io/kbarchive/kb/065/Q65122/
 [o21]: https://github.com/ForNeVeR/O21
-[status-zero]: https://img.shields.io/badge/status-zero-lightgrey.svg
+[status-ventis]: https://img.shields.io/badge/status-ventis-yellow.svg
 [wikipedia.ne]: https://en.wikipedia.org/wiki/New_Executable
