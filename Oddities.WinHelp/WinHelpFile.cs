@@ -55,8 +55,8 @@ public struct WinHelpFile
         var bTreeHeader = BTreeHeader.Load(_data);
         if (bTreeHeader.Magic != 0x293B) throw new Exception($"Unexpected BTreeHeader signature: {bTreeHeader.Magic}.");
 
-        if (bTreeHeader.NLevels != 1) throw new Exception($"NLevels = {bTreeHeader.NLevels} is not expected 1.");
-        if (bTreeHeader.RootPage != 0) throw new Exception($"RootPage = {bTreeHeader.RootPage} is not expected 0.");
+        if (bTreeHeader.NLevels != 1) throw new Exception($"NLevels = {bTreeHeader.NLevels} is not expected, expected 1.");
+        if (bTreeHeader.RootPage != 0) throw new Exception($"RootPage = {bTreeHeader.RootPage} is not expected, expected 0.");
 
         var bTreeIndexHeader = BTreeIndexHeader.Load(_data, fileNameEncoding);
         return bTreeIndexHeader.Entries;

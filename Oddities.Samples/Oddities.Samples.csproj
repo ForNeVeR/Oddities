@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Oddities.MRB\Oddities.MRB.csproj" />
+      <ProjectReference Include="..\Oddities.NE\Oddities.NE.csproj" />
+      <ProjectReference Include="..\Oddities.DIB\Oddities.DIB.fsproj" />
+      <ProjectReference Include="..\Oddities.WinHelp\Oddities.WinHelp.csproj" />
+    </ItemGroup>
+
+</Project>

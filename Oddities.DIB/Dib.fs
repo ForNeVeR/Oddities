@@ -1,5 +1,6 @@
 namespace Oddities.Resources
 
+open System
 open System.Buffers.Binary
 
 type RGB = (struct(byte * byte * byte))
@@ -61,3 +62,18 @@ type Dib(dib: byte[]) =
             let paletteIndex = byteValue >>> 8
             palette[int paletteIndex]
         else failwith $"Unsupported color depth: {colorDepth}"
+
+    member dib.AsBmp(): byte[] =
+        let pixelDataOffset =
+            14 + // BMP header
+            40 + // DIB header
+            dib.Palette.Length * 4 // palette
+
+        [|
+            yield! "BM"B
+            yield! BitConverter.GetBytes(dib.Raw.Length + 14)
+            yield! BitConverter.GetBytes 0us
+            yield! BitConverter.GetBytes 0us
+            yield! BitConverter.GetBytes pixelDataOffset
+            yield! dib.Raw
+        |]

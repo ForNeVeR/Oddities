@@ -32,7 +32,7 @@ public class MrbFile
 
     public WmfDocument ReadWmfDocument(ShgImageHeader imageHeader)
     {
-        if (imageHeader.Type != ImageType.Wmf) throw new Exception("Only WMF images are supported for now");
+        if (imageHeader.Type != ImageType.Wmf) throw new Exception("Only WMF images are supported.");
 
         _input.Position = imageHeader.DataOffset;
         var metafileHeader = ShgMetafileHeader.Read(_input);
