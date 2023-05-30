@@ -13,6 +13,8 @@ If you encounter a case not handled by the library, don't hesitate to [open an i
 
 Read the corresponding sections below for each part of the library suite.
 
+All the examples are collected in the `Oddities.Samples` project, feel free to take a look.
+
 Documentation
 -------------
 - [Contributor Guide][docs.contributing]
