@@ -18,7 +18,7 @@ To update the key:
 
 1. Sign in onto nuget.org.
 2. Go to the [API keys][nuget.api-keys] section.
-3. Create a new key with permission to **Push new packages and package versions** and only allowed to publish **FVNever.Oddities** packages.
+3. Create a new key with permission to **Push new packages and package versions** and only allowed to publish packages by a glob pattern `FVNever.Oddities.*`.
 
    Alternately, if you have such key already and want to regenerate it, press the **Regenerate** button in its page section.
 4. Paste the generated API keys to the [action secrets][github.secrets] section on GitHub settings (update the `NUGET_TOKEN` secret).
