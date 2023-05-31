@@ -3,15 +3,17 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <PropertyGroup>
+    <PropertyGroup Label="Packaging">
+        <PackageId>FVNever.Oddities.NE</PackageId>
+        <PackageTags>binary;win16;ne</PackageTags>
         <Description>New Executable (Win16 executable files, NE) file format reader.</Description>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="All" />
+        <PackageReference Include="ChangelogAutomation.MSBuild" Version="2.0.0" PrivateAssets="All"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="All"/>
     </ItemGroup>
 
 </Project>

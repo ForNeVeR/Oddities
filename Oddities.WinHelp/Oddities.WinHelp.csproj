@@ -3,14 +3,20 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <PropertyGroup Label="Packaging">
+        <PackageId>FVNever.Oddities.WinHelp</PackageId>
+        <PackageTags>winhelp</PackageTags>
+        <Description>WinHelp (.hlp) file format reader for .NET.</Description>
+    </PropertyGroup>
+
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="All" />
+        <PackageReference Include="ChangelogAutomation.MSBuild" Version="2.0.0" PrivateAssets="All"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="All"/>
     </ItemGroup>
 
-    <Import Project="..\Oddities.StreamUtil\Oddities.StreamUtil.projitems" Label="Shared" />
+    <Import Project="..\Oddities.StreamUtil\Oddities.StreamUtil.projitems" Label="Shared"/>
 
 </Project>

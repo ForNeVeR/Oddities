@@ -21,4 +21,12 @@ Execute the following shell command:
 $ dotnet test
 ```
 
+Pack for NuGet
+--------------
+Execute the following shell command:
+
+```console
+$ dotnet pack
+```
+
 [dotnet]: https://dot.net/

@@ -11,6 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		.gitignore = .gitignore
+		MAINTAINERSHIP.md = MAINTAINERSHIP.md
+		Directory.Build.props = Directory.Build.props
+		CHANGELOG.md = CHANGELOG.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{EF058526-C7EE-49BB-9104-3459B7BAA839}"
@@ -18,6 +21,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{12CFB952-1E87-4BDD-9EB1-E3005CA6B0BC}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\main.yml = .github\workflows\main.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.MRB", "Oddities.MRB\Oddities.MRB.csproj", "{4FDF05F5-61B1-41EF-884F-CB2A86855FC1}"
@@ -31,6 +35,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.Samples", "Oddities.Samples\Oddities.Samples.csproj", "{5178FA98-8E58-4651-8534-AA1F3BB734F5}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Oddities.StreamUtil", "Oddities.StreamUtil\Oddities.StreamUtil.shproj", "{71F464ED-1762-4B9B-A292-AF1F6A97B59A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{06B3CF94-C5D7-4FAB-940C-BC7BF483DA99}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\Get-Version.ps1 = Scripts\Get-Version.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

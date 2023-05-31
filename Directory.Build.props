@@ -1,0 +1,28 @@
+<Project>
+    <PropertyGroup Label="Packaging">
+        <Version>1.0.0</Version>
+        <Copyright>Copyright (C) 2023 O21 contributors; Copyright (C) 2023 Oddities contributors</Copyright>
+
+        <Authors>ForNeVeR</Authors>
+        <PackageProjectUrl>https://github.com/ForNeVeR/Oddities</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/ForNeVeR/Oddities.git</RepositoryUrl>
+
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup Label="Packaging" Condition=" $(IsPackable) == 'true' ">
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+        <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(MSBuildProjectExtension)' == '.csproj' ">
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+</Project>

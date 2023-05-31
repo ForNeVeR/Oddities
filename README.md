@@ -3,13 +3,13 @@ Oddities [![Status Ventis][status-ventis]][andivionian-status-classifier]
 This repository groups several .NET libraries supporting old and obscure data formats.
 
 Currently, the following data formats are supported:
-- [NE (New Executable)][wikipedia.ne], 16-bit `.exe` Windows binary.
 - [DIB (Device-Independent Bitmap)][microsoft.dib], encountered as part of the BMP format and in the NE resource table.
+- [NE (New Executable)][wikipedia.ne], 16-bit `.exe` Windows binary.
 - [Windows Help File format][docs.winhelp] (aka WinHelp aka `.hlp`) and accompanying formats (often stored in a `.hlp` file):
   - [MRB (Multi-Resolution Bitmap)][file-info.mrb],
-  - [SHG (Segmented Hyper-Graphic)][file-info.shg].
+  - [SHG (Segmented Hyper-Graphics)][file-info.shg].
 
-If you encounter a case not handled by the library, don't hesitate to [open an issue][issues]! 
+If you encounter a case not handled by the library, don't hesitate to [open an issue][issues]!
 
 Read the corresponding sections below for each part of the library suite.
 
@@ -21,7 +21,7 @@ Documentation
 - [License (MIT)][docs.license]
 - [Code of Conduct (adapted from the Contributor Covenant)][docs.code-of-conduct]
 
-Oddities.DIB
+Oddities.DIB [![NuGet][badge.dib]][nuget.dib]
 ------------
 This library provides some helpful functions to work with the [DIB (Device-Independent Bitmap)][microsoft.dib] image format, often encountered as part of bigger bitmap formats or in resource sections of executable files, such as NE and PE (Portable Executable).
 
@@ -40,9 +40,9 @@ byte[] DibSample(byte[] input)
 ### Known Limitations
 - Only 1, 4, and 8-bit palettes are supported.
 
-Oddities.MRB
+Oddities.MRB [![NuGet][badge.mrb]][nuget.mrb]
 ------------
-This library supports reading of [MRB (Multi-Resolution Bitmap)][file-info.mrb] and [SHG (Segmented Hyper-Graphic)][file-info.shg] image formats. Most often, these files are encountered during reading of `.HLP` files using Oddities.WilHelp.
+This library supports reading of [MRB (Multi-Resolution Bitmap)][file-info.mrb] and [SHG (Segmented Hyper-Graphics)][file-info.shg] image formats. Most often, these files are encountered during reading of `.HLP` files using Oddities.WilHelp.
 
 This library has been extracted into a separate package mainly because of different dependencies: it uses a third-party package to read WMF files (that may be part of SHG).
 
@@ -71,7 +71,7 @@ Dib ExtractDibFromWmfInsideMrb(string mrbPath)
 - Only WMF data is supported inside MRB, no BMP support.
 - Only RLE compression is supported.
 
-Oddities.NE
+Oddities.NE [![NuGet][badge.ne]][nuget.ne]
 -----------
 Library supporting the [NE (New Executable)][wikipedia.ne] file format (usually stored as `.exe`), the 16-bit executable file format used in Windows 1.0–3.x and some other operating systems.
 
@@ -96,7 +96,7 @@ Dib[] ReadImagesFromNeFile(string nePath)
 }
 ```
 
-Oddities.WinHelp
+Oddities.WinHelp [![NuGet][badge.winhelp]][nuget.winhelp]
 ----------------
 This library supports reading of Windows Help files, aka WinHelp, aka `.hlp`.
 
@@ -209,6 +209,10 @@ Acknowledgments
   - Paul Wise and other contributors of [helpdeco][].
 
 [andivionian-status-classifier]: https://github.com/ForNeVeR/andivionian-status-classifier#status-ventis-
+[badge.dib]: https://img.shields.io/nuget/v/FVNever.Oddities.DIB.svg
+[badge.mrb]: https://img.shields.io/nuget/v/FVNever.Oddities.MRB.svg
+[badge.ne]: https://img.shields.io/nuget/v/FVNever.Oddities.NE.svg
+[badge.winhelp]: https://img.shields.io/nuget/v/FVNever.Oddities.WinHelp.svg
 [book.windows-undocumented-file-formats]: https://a.co/d/dq5fCoj
 [docs.code-of-conduct]: CODE_OF_CONDUCT.md
 [docs.contributing]: CONTRIBUTING.md
@@ -217,9 +221,13 @@ Acknowledgments
 [file-info.mrb]: https://fileinfo.com/extension/mrb
 [file-info.shg]: https://fileinfo.com/extension/shg
 [helpdeco]: https://github.com/pmachapman/helpdeco
-[issues]: https://github.com/ForNeVeR/Oddities/issues 
+[issues]: https://github.com/ForNeVeR/Oddities/issues
 [microsoft.dib]: https://learn.microsoft.com/en-us/windows/win32/gdi/device-independent-bitmaps
 [microsoft.ne]: https://jeffpar.github.io/kbarchive/kb/065/Q65122/
+[nuget.dib]:  https://www.nuget.org/packages/FVNever.Oddities.DIB/
+[nuget.mrb]:  https://www.nuget.org/packages/FVNever.Oddities.MRB/
+[nuget.ne]:  https://www.nuget.org/packages/FVNever.Oddities.NE/
+[nuget.winhelp]:  https://www.nuget.org/packages/FVNever.Oddities.WinHelp/
 [o21]: https://github.com/ForNeVeR/O21
 [status-ventis]: https://img.shields.io/badge/status-ventis-yellow.svg
 [wikipedia.ne]: https://en.wikipedia.org/wiki/New_Executable

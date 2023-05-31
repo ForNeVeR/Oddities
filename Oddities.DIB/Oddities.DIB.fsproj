@@ -2,8 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <RootNamespace>Oddities.Dib</RootNamespace>
+    </PropertyGroup>
+    
+    <PropertyGroup Label="Packaging">
+        <PackageId>FVNever.Oddities.DIB</PackageId>
+        <PackageTags>bitmap;dib</PackageTags>
+        <Description>DIB (Device-Independent Bitmap) data format support for .NET.</Description>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Oddities.NE\Oddities.NE.csproj" />
+      <PackageReference Include="ChangelogAutomation.MSBuild" Version="2.0.0" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

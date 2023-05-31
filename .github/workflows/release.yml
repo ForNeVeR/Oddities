@@ -1,0 +1,195 @@
+﻿name: Release
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'main'
+  schedule:
+    - cron: '0 0 * * 6'
+  workflow_dispatch:
+
+jobs:
+  nuget-push:
+    runs-on: 'ubuntu-22.04'
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_PACKAGES: ${{ github.workspace }}/.github/nuget-packages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read version from ref
+        id: version
+        shell: pwsh
+        run: echo "version=$(./Scripts/Get-Version.ps1 -RefName $env:GITHUB_REF)" >> $env:GITHUB_OUTPUT
+
+      - name: NuGet cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.NUGET_PACKAGES }}
+          key: release.nuget.${{ hashFiles('**/*.csproj', '**/*.fsproj') }}
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Prepare NuGet packages
+        run: dotnet pack --configuration Release -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Read changelog
+        id: changelog
+        uses: ForNeVeR/ChangelogAutomation.action@v1
+        with:
+          output: ./release-notes.md
+
+      - name: 'Upload the workflow artifacts'
+        uses: 'actions/upload-artifact@v3'
+        with:
+          name: 'Oddities v${{ steps.version.outputs.version }}'
+          path: |
+            ./release-notes.md
+            ./Oddities.DIB/bin/Release/FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.nupkg
+            ./Oddities.DIB/bin/Release/FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.snupkg
+            ./Oddities.MRB/bin/Release/FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.nupkg
+            ./Oddities.MRB/bin/Release/FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.snupkg
+            ./Oddities.NE/bin/Release/FVNever.Oddities.NE.${{ steps.version.outputs.version }}.nupkg
+            ./Oddities.NE/bin/Release/FVNever.Oddities.NE.${{ steps.version.outputs.version }}.snupkg
+            ./Oddities.WinHelp/bin/Release/FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.nupkg
+            ./Oddities.WinHelp/bin/Release/FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.snupkg
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/v')
+        id: release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Oddities v${{ steps.version.outputs.version }}
+          body_path: ./release-notes.md
+
+      - name: Upload Oddities.DIB .nupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.nupkg
+          asset_path: ./Oddities.DIB/bin/Release/FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.nupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.DIB .snupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.snupkg
+          asset_path: ./Oddities.DIB/bin/Release/FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.snupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.MRB .nupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.nupkg
+          asset_path: ./Oddities.MRB/bin/Release/FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.nupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.MRB .snupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.snupkg
+          asset_path: ./Oddities.MRB/bin/Release/FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.snupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.NE .nupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.NE.${{ steps.version.outputs.version }}.nupkg
+          asset_path: ./Oddities.NE/bin/Release/FVNever.Oddities.NE.${{ steps.version.outputs.version }}.nupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.NE .snupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.NE.${{ steps.version.outputs.version }}.snupkg
+          asset_path: ./Oddities.NE/bin/Release/FVNever.Oddities.NE.${{ steps.version.outputs.version }}.snupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.WinHelp .nupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.nupkg
+          asset_path: ./Oddities.WinHelp/bin/Release/FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.nupkg
+          asset_content_type: application/zip
+
+      - name: Upload Oddities.WinHelp .snupkg file
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_name: FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.snupkg
+          asset_path: ./Oddities.WinHelp/bin/Release/FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.snupkg
+          asset_content_type: application/zip
+
+      - name: Push Oddities.DIB package to NuGet
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push
+            ./Oddities.DIB/bin/Release/FVNever.Oddities.DIB.${{ steps.version.outputs.version }}.nupkg
+            --source https://api.nuget.org/v3/index.json
+            --api-key ${{ secrets.NUGET_TOKEN }}
+
+      - name: Push Oddities.MRB package to NuGet
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push
+            ./Oddities.MRB/bin/Release/FVNever.Oddities.MRB.${{ steps.version.outputs.version }}.nupkg
+            --source https://api.nuget.org/v3/index.json
+            --api-key ${{ secrets.NUGET_TOKEN }}
+
+      - name: Push Oddities.NE package to NuGet
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push
+            ./Oddities.NE/bin/Release/FVNever.Oddities.NE.${{ steps.version.outputs.version }}.nupkg
+            --source https://api.nuget.org/v3/index.json
+            --api-key ${{ secrets.NUGET_TOKEN }}
+
+      - name: Push Oddities.WinHelp package to NuGet
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: >
+          dotnet nuget push
+            ./Oddities.WinHelp/bin/Release/FVNever.Oddities.WinHelp.${{ steps.version.outputs.version }}.nupkg
+            --source https://api.nuget.org/v3/index.json
+            --api-key ${{ secrets.NUGET_TOKEN }}
