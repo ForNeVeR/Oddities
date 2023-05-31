@@ -4,6 +4,7 @@
         <Copyright>Copyright (C) 2023 O21 contributors; Copyright (C) 2023 Oddities contributors</Copyright>
 
         <Authors>ForNeVeR</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/ForNeVeR/Oddities</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ForNeVeR/Oddities.git</RepositoryUrl>
 
