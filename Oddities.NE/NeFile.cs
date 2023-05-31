@@ -84,7 +84,9 @@ public class NeFile
         var length = resource.ContentLength * alignment;
 
         _input.BaseStream.Position = offset;
-        return _input.ReadBytes(length);
+        var buffer = new byte[length];
+        _input.BaseStream.ReadExactly(buffer);
+        return buffer;
     }
 
     private NeResource ReadResource()

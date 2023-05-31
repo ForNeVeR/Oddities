@@ -68,7 +68,9 @@ public struct WinHelpFile
         _data.BaseStream.Position = entry.FileOffset;
         var file = HfsEntry.Load(_data);
         if (file.FileType != HfsFileType.Normal) throw new Exception($"Abnormal HFS entry type: {file.FileType}.");
-
-        return _data.ReadBytes(file.UsedSpace);
+        
+        var buffer = new byte[file.UsedSpace];
+        _data.BaseStream.ReadExactly(buffer);
+        return buffer;
     }
 }

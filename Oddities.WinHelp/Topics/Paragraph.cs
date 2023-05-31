@@ -44,13 +44,18 @@ public struct Paragraph
     {
         var realLength = DataLen1 - 21;
         Data.BaseStream.Position = DataOffset;
-        return Data.ReadBytes(realLength);
+        
+        var buffer = new byte[realLength];
+        Data.BaseStream.ReadExactly(buffer);
+        return buffer;
     }
 
     public byte[] ReadData2()
     {
         Data.BaseStream.Position = DataOffset + DataLen1 - 21;
-        return Data.ReadBytes(DataLen2);
+        var buffer = new byte[DataLen2];
+        Data.BaseStream.ReadExactly(buffer);
+        return buffer;
     }
 
     public ParagraphItems ReadItems(Encoding encoding)
