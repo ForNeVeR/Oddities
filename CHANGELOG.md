@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog][keep-a-changelog], and this project ad
 
 Please note that all the libraries are versioned together, so it's possible a particular version was released without any changes in a particular library.
 
-## [Unreleased] (1.0.0)
+## [1.0.0] - 2023-06-01
 ### Added
 The initial release (using the code extracted from [the O21 project][o21]) including the following packages:
 
@@ -24,4 +24,5 @@ The initial release (using the code extracted from [the O21 project][o21]) inclu
 [semver]: https://semver.org/spec/v2.0.0.html
 [wikipedia.ne]: https://en.wikipedia.org/wiki/New_Executable
 
-[Unreleased]: https://github.com/ForNeVeR/Oddities
+[1.0.0]: https://github.com/ForNeVeR/Oddities/releases/tag/v1.0.0
+[Unreleased]: https://github.com/ForNeVeR/Oddities/compare/v1.0.0...HEAD
