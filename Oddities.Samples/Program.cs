@@ -71,7 +71,8 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         else if (entry.FileName == "|SYSTEM")
         {
             using var stream = new MemoryStream(bytes);
-            var header = SystemHeader.Load(reader);
+            using var headerReader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+            var header = SystemHeader.Load(headerReader);
             Console.WriteLine(" - SystemHeader ok.");
         }
         else if (entry.FileName == "|FONT")
@@ -87,7 +88,8 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         else if (entry.FileName == "|TOPIC")
         {
             using var stream = new MemoryStream(bytes);
-            var topic = TopicFile.Load(reader);
+            using var topicReader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+            var topic = TopicFile.Load(topicReader);
             Console.WriteLine(" - Topic ok.");
 
             var i = 0;
