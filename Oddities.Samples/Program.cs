@@ -11,7 +11,8 @@ using Oxage.Wmf.Records;
 Dib ExtractDibFromWmfInsideMrb(string mrbPath)
 {
     using var stream = new FileStream(mrbPath, FileMode.Open);
-    var file = MrbFile.Load(stream);
+    using var reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+    var file = MrbFile.Load(reader);
     if (file.ImageCount != 1) throw new Exception("Too many images in the file");
     var image = file.ReadImage(0);
     WmfDocument wmf = file.ReadWmfDocument(image);
@@ -27,7 +28,8 @@ Dib ExtractDibFromWmfInsideMrb(string mrbPath)
 Dib[] ReadImagesFromNeFile(string nePath)
 {
     using var stream = new FileStream(nePath, FileMode.Open, FileAccess.Read);
-    var neFile = NeFile.ReadFrom(stream);
+    using var reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+    var neFile = NeFile.ReadFrom(reader);
     var resources = neFile.ReadResourceTable();
     var bitmapResourceType = resources.Single(x => x.TypeId == 32770u);
     return bitmapResourceType.Resources
@@ -47,7 +49,8 @@ byte[] DibSample(byte[] input)
 void DumpWinHelpFile(string hlpPath, string outDir)
 {
     using var input = new FileStream(hlpPath, FileMode.Open, FileAccess.Read);
-    var file = WinHelpFile.Load(input);
+    using var reader = new BinaryReader(input, Encoding.UTF8, leaveOpen: true);
+    var file = WinHelpFile.Load(reader);
     var dibs = new List<Dib>();
     foreach (var entry in file.GetFiles(Encoding.UTF8))
     {
@@ -68,13 +71,14 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         else if (entry.FileName == "|SYSTEM")
         {
             using var stream = new MemoryStream(bytes);
-            var header = SystemHeader.Load(stream);
+            var header = SystemHeader.Load(reader);
             Console.WriteLine(" - SystemHeader ok.");
         }
         else if (entry.FileName == "|FONT")
         {
             using var stream = new MemoryStream(bytes);
-            var fontFile = FontFile.Load(stream);
+            using var fontReader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+            var fontFile = FontFile.Load(fontReader);
             Console.WriteLine(" - Font ok.");
 
             foreach (var descriptor in fontFile.ReadDescriptors())
@@ -83,7 +87,7 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         else if (entry.FileName == "|TOPIC")
         {
             using var stream = new MemoryStream(bytes);
-            var topic = TopicFile.Load(stream);
+            var topic = TopicFile.Load(reader);
             Console.WriteLine(" - Topic ok.");
 
             var i = 0;

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp;
 
@@ -8,11 +8,12 @@ namespace Oddities.WinHelp;
 /// <para>[1]: http://www.oocities.org/mwinterhoff/helpfile.htm</para>
 /// <para>[2]: P. Davis and M. Wallace — Windows Undocumented File Formats.</para>
 /// </remarks>
+[PublicAPI]
 public struct WinHelpFile
 {
     private const int Magic = 0x35F3F;
 
-    private readonly Stream _data;
+    private readonly BinaryReader _data;
 
     private readonly int _hfsOffset;
 
@@ -21,7 +22,7 @@ public struct WinHelpFile
 
     private readonly int _entireFileSize;
 
-    public WinHelpFile(Stream data, int hfsOffset, int firstFreeBlock, int entireFileSize)
+    public WinHelpFile(BinaryReader data, int hfsOffset, int firstFreeBlock, int entireFileSize)
     {
         _data = data;
         _hfsOffset = hfsOffset;
@@ -29,9 +30,9 @@ public struct WinHelpFile
         _entireFileSize = entireFileSize;
     }
 
-    public static WinHelpFile Load(Stream input)
+    public static WinHelpFile Load(BinaryReader input)
     {
-        var magic = input.ReadInt32Le();
+        var magic = input.ReadInt32();
         if (magic != Magic)
         {
             throw new Exception(
@@ -39,16 +40,16 @@ public struct WinHelpFile
                 $"got {magic.ToString("x", CultureInfo.InvariantCulture)}.");
         }
 
-        var hfsOffset = input.ReadInt32Le();
-        var firstFreeBlock = input.ReadInt32Le();
-        var entireFileSize = input.ReadInt32Le();
+        var hfsOffset = input.ReadInt32();
+        var firstFreeBlock = input.ReadInt32();
+        var entireFileSize = input.ReadInt32();
 
         return new WinHelpFile(input, hfsOffset, firstFreeBlock, entireFileSize);
     }
 
     public DirectoryIndexEntry[] GetFiles(Encoding fileNameEncoding)
     {
-        _data.Position = _hfsOffset;
+        _data.BaseStream.Position = _hfsOffset;
         var hfs = HfsEntry.Load(_data);
         if (hfs.FileType != HfsFileType.Hfs) throw new Exception($"Unexpected root file entry: {hfs.FileType}.");
 
@@ -64,13 +65,10 @@ public struct WinHelpFile
 
     public byte[] ReadFile(DirectoryIndexEntry entry)
     {
-        _data.Position = entry.FileOffset;
+        _data.BaseStream.Position = entry.FileOffset;
         var file = HfsEntry.Load(_data);
         if (file.FileType != HfsFileType.Normal) throw new Exception($"Abnormal HFS entry type: {file.FileType}.");
 
-        var buffer = new byte[file.UsedSpace];
-        _data.ReadExactly(buffer);
-
-        return buffer;
+        return _data.ReadBytes(file.UsedSpace);
     }
 }

@@ -1,7 +1,8 @@
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp.Fonts;
 
+[PublicAPI]
 [Flags]
 public enum FontAttributes : byte
 {
@@ -14,6 +15,7 @@ public enum FontAttributes : byte
     SmallCaps = 0x20
 }
 
+[PublicAPI]
 public struct RgbTriple
 {
     public byte B;
@@ -21,6 +23,7 @@ public struct RgbTriple
     public byte R;
 }
 
+[PublicAPI]
 public struct FontDescriptor
 {
     public FontAttributes Attributes;
@@ -31,20 +34,20 @@ public struct FontDescriptor
     public RgbTriple ScrollingRegionColor;
     public RgbTriple NonScrollingRegionColor;
 
-    public static FontDescriptor Read(Stream input)
+    public static FontDescriptor Read(BinaryReader input)
     {
         FontDescriptor descriptor;
-        descriptor.Attributes = (FontAttributes)input.ReadByteExact();
-        descriptor.HalfPoints = input.ReadByteExact();
-        descriptor.FontFamily = input.ReadByteExact();
-        descriptor.FontName = input.ReadByteExact();
-        descriptor.UnknownZero = input.ReadByteExact();
-        descriptor.ScrollingRegionColor.B = input.ReadByteExact();
-        descriptor.ScrollingRegionColor.G = input.ReadByteExact();
-        descriptor.ScrollingRegionColor.R = input.ReadByteExact();
-        descriptor.NonScrollingRegionColor.B = input.ReadByteExact();
-        descriptor.NonScrollingRegionColor.G = input.ReadByteExact();
-        descriptor.NonScrollingRegionColor.R = input.ReadByteExact();
+        descriptor.Attributes = (FontAttributes)input.ReadByte();
+        descriptor.HalfPoints = input.ReadByte();
+        descriptor.FontFamily = input.ReadByte();
+        descriptor.FontName = input.ReadByte();
+        descriptor.UnknownZero = input.ReadByte();
+        descriptor.ScrollingRegionColor.B = input.ReadByte();
+        descriptor.ScrollingRegionColor.G = input.ReadByte();
+        descriptor.ScrollingRegionColor.R = input.ReadByte();
+        descriptor.NonScrollingRegionColor.B = input.ReadByte();
+        descriptor.NonScrollingRegionColor.G = input.ReadByte();
+        descriptor.NonScrollingRegionColor.R = input.ReadByte();
         return descriptor;
     }
 }

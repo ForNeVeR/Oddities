@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Oddities.StreamUtil\Oddities.StreamUtil.csproj" />
+      <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
     </ItemGroup>
+
+    <Import Project="..\Oddities.StreamUtil\Oddities.StreamUtil.projitems" Label="Shared" />
 
 </Project>

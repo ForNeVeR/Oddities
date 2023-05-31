@@ -26,11 +26,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.NE", "Oddities.NE\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Oddities.DIB", "Oddities.DIB\Oddities.DIB.fsproj", "{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.StreamUtil", "Oddities.StreamUtil\Oddities.StreamUtil.csproj", "{BF1E8FDC-6EF8-47AA-B2E1-DBFBDEB0ABC0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.WinHelp", "Oddities.WinHelp\Oddities.WinHelp.csproj", "{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.Samples", "Oddities.Samples\Oddities.Samples.csproj", "{5178FA98-8E58-4651-8534-AA1F3BB734F5}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Oddities.StreamUtil", "Oddities.StreamUtil\Oddities.StreamUtil.shproj", "{71F464ED-1762-4B9B-A292-AF1F6A97B59A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +56,6 @@ Global
 		{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF1E8FDC-6EF8-47AA-B2E1-DBFBDEB0ABC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF1E8FDC-6EF8-47AA-B2E1-DBFBDEB0ABC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF1E8FDC-6EF8-47AA-B2E1-DBFBDEB0ABC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF1E8FDC-6EF8-47AA-B2E1-DBFBDEB0ABC0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}.Release|Any CPU.ActiveCfg = Release|Any CPU

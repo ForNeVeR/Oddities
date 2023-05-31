@@ -1,21 +1,23 @@
 ﻿using System.Runtime.InteropServices;
-using Oddities.StreamUtil;
+using System.Text;
+using JetBrains.Annotations;
 using Oxage.Wmf;
 
 namespace Oddities.MRB;
 
+[PublicAPI]
 public class MrbFile
 {
-    private readonly Stream _input;
+    private readonly BinaryReader _input;
     private readonly ShgFileHeader _header;
 
-    public MrbFile(Stream input, ShgFileHeader header)
+    public MrbFile(BinaryReader input, ShgFileHeader header)
     {
         _input = input;
         _header = header;
     }
 
-    public static MrbFile Load(Stream input)
+    public static MrbFile Load(BinaryReader input)
     {
         var header = ShgFileHeader.Read(input);
         return new MrbFile(input, header);
@@ -26,7 +28,7 @@ public class MrbFile
     public ShgImageHeader ReadImage(int index)
     {
         var offset = _header.ObjectOffsets[index];
-        _input.Position = offset;
+        _input.BaseStream.Position = offset;
         return ShgImageHeader.Read(_input);
     }
 
@@ -34,30 +36,31 @@ public class MrbFile
     {
         if (imageHeader.Type != ImageType.Wmf) throw new Exception("Only WMF images are supported.");
 
-        _input.Position = imageHeader.DataOffset;
+        _input.BaseStream.Position = imageHeader.DataOffset;
         var metafileHeader = ShgMetafileHeader.Read(_input);
 
         using var result = new MemoryStream();
+        using var writer = new BinaryWriter(result, Encoding.UTF8, leaveOpen: true);
 
         // Write WMF file header:
-        result.Write(new byte[] { 0xD7, 0xCD, 0xC6, 0x9A }); // magic
-        result.WriteUInt16Le(0); // no idea
+        writer.Write(new byte[] { 0xD7, 0xCD, 0xC6, 0x9A }); // magic
+        writer.Write((ushort)0); // no idea
 
-        result.WriteUInt16Le(0); // left
-        result.WriteUInt16Le(0); // top
-        result.WriteUInt16Le(metafileHeader.Width);
-        result.WriteUInt16Le(metafileHeader.Height);
-        result.WriteUInt16Le(2540); // default DPI for WMF
-        result.WriteUInt32Le(0); // reserved
+        writer.Write((ushort)0); // left
+        writer.Write((ushort)0); // top
+        writer.Write(metafileHeader.Width);
+        writer.Write(metafileHeader.Height);
+        writer.Write((ushort)2540); // default DPI for WMF
+        writer.Write(0); // reserved
 
         var checksum = CalculateChecksum(result);
         result.Position = result.Length;
-        result.WriteUInt16Le(checksum);
+        writer.Write(checksum);
 
         if (imageHeader.Compression != CompressionType.Rle)
             throw new Exception($"Compression type {imageHeader.Compression} is not supported.");
 
-        DecompressRle(metafileHeader.CompressedDataSize, result);
+        DecompressRle(metafileHeader.CompressedDataSize, writer);
 
         result.Position = 0;
         var doc = new WmfDocument();
@@ -87,30 +90,30 @@ public class MrbFile
         }
     }
 
-    public void DecompressRle(uint compressedDataSize, Stream output)
+    public void DecompressRle(uint compressedDataSize, BinaryWriter output)
     {
         var bytesRead = 0;
         while (bytesRead < compressedDataSize)
         {
-            var count = _input.ReadByteExact();
+            var count = _input.ReadByte();
             ++bytesRead;
             if ((count & 0x80) != 0)
             {
                 count -= 0x80;
                 while (count-- > 0)
                 {
-                    var data = _input.ReadByteExact();
+                    var data = _input.ReadByte();
                     ++bytesRead;
-                    output.WriteByte(data);
+                    output.Write(data);
                 }
             }
             else
             {
                 count = (byte)(count & 0x7F);
-                var data = _input.ReadByteExact();
+                var data = _input.ReadByte();
                 ++bytesRead;
                 for (var i = 0; i < count; ++i)
-                    output.WriteByte(data);
+                    output.Write(data);
             }
         }
     }

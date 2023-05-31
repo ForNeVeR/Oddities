@@ -1,9 +1,10 @@
 ﻿using System.Globalization;
 using System.Text;
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp.Topics;
 
+[PublicAPI]
 public enum ParagraphRecordType : byte
 {
     TopicHeader = 0x02,
@@ -11,9 +12,10 @@ public enum ParagraphRecordType : byte
     TableRecord = 0x23
 }
 
+[PublicAPI]
 public struct Paragraph
 {
-    private Stream Data { get; init; }
+    private BinaryReader Data { get; init; }
     private long DataOffset { get; init; }
 
     public int BlockSize;
@@ -23,45 +25,42 @@ public struct Paragraph
     public int DataLen1;
     public ParagraphRecordType RecordType;
 
-    public static Paragraph Load(Stream input)
+    public static Paragraph Load(BinaryReader input)
     {
         return new Paragraph
         {
             Data = input,
-            BlockSize = input.ReadInt32Le(),
-            DataLen2 = input.ReadInt32Le(),
-            PrevPara = input.ReadInt32Le(),
-            NextPara = input.ReadInt32Le(),
-            DataLen1 = input.ReadInt32Le(),
-            RecordType = (ParagraphRecordType)input.ReadByteExact(),
-            DataOffset = input.Position
+            BlockSize = input.ReadInt32(),
+            DataLen2 = input.ReadInt32(),
+            PrevPara = input.ReadInt32(),
+            NextPara = input.ReadInt32(),
+            DataLen1 = input.ReadInt32(),
+            RecordType = (ParagraphRecordType)input.ReadByte(),
+            DataOffset = input.BaseStream.Position
         };
     }
 
     public byte[] ReadData1()
     {
         var realLength = DataLen1 - 21;
-        Data.Position = DataOffset;
-        var buffer = new byte[realLength];
-        Data.ReadExactly(buffer);
-        return buffer;
+        Data.BaseStream.Position = DataOffset;
+        return Data.ReadBytes(realLength);
     }
 
     public byte[] ReadData2()
     {
-        Data.Position = DataOffset + DataLen1 - 21;
-        var buffer = new byte[DataLen2];
-        Data.ReadExactly(buffer);
-        return buffer;
+        Data.BaseStream.Position = DataOffset + DataLen1 - 21;
+        return Data.ReadBytes(DataLen2);
     }
 
     public ParagraphItems ReadItems(Encoding encoding)
     {
         var data1 = ReadData1();
         using var data1Stream = new MemoryStream(data1);
-        _ = FormatHeader.Read(data1Stream);
+        using var data1Reader = new BinaryReader(data1Stream, Encoding.UTF8, leaveOpen: true);
+        _ = FormatHeader.Read(data1Reader);
 
-        var settings = ParagraphSettings.Load(data1Stream);
+        var settings = ParagraphSettings.Load(data1Reader);
         data1Stream.Position += 2; // just skip 2 bytes, that's it
 
         var textData = ReadData2();
@@ -107,14 +106,14 @@ public struct Paragraph
 
         IParagraphItem? ReadFormatInfo()
         {
-            var command = data1Stream.ReadByteExact();
+            var command = data1Reader.ReadByte();
             return command switch
             {
-                0x80 => new FontChange(data1Stream.ReadUInt16Le()),
+                0x80 => new FontChange(data1Reader.ReadUInt16()),
                 0x81 => new NewLine(),
                 0x82 => new NewParagraph(),
                 0x83 => new Tab(),
-                0x86 => Bitmap.Read(data1Stream, BitmapAlignment.Current),
+                0x86 => Bitmap.Read(data1Reader, BitmapAlignment.Current),
                 0xff => null,
                 _ => throw new Exception(
                     $"Unknown formatting command code: {command.ToString("x", CultureInfo.InvariantCulture)}.")

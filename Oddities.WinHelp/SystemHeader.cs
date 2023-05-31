@@ -1,8 +1,9 @@
 using System.Globalization;
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp;
 
+[PublicAPI]
 public struct SystemHeader
 {
     public byte Magic;
@@ -13,16 +14,16 @@ public struct SystemHeader
     public uint GenDate;
     public ushort Flags;
 
-    public static SystemHeader Load(Stream input)
+    public static SystemHeader Load(BinaryReader input)
     {
         SystemHeader header;
-        header.Magic = input.ReadByteExact();
-        header.Version = input.ReadByteExact();
-        header.Revision = input.ReadByteExact();
-        header.Always0 = input.ReadByteExact();
-        header.Always1 = input.ReadByteExact();
-        header.GenDate = input.ReadUInt32Le();
-        header.Flags = input.ReadUInt16Le();
+        header.Magic = input.ReadByte();
+        header.Version = input.ReadByte();
+        header.Revision = input.ReadByte();
+        header.Always0 = input.ReadByte();
+        header.Always1 = input.ReadByte();
+        header.GenDate = input.ReadUInt32();
+        header.Flags = input.ReadUInt16();
 
         if (header.Magic != 0x6C)
             throw new Exception(

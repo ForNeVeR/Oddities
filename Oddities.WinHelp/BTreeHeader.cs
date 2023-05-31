@@ -1,7 +1,8 @@
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp;
 
+[PublicAPI]
 [Flags]
 public enum BTreeFlags : ushort
 {
@@ -9,6 +10,7 @@ public enum BTreeFlags : ushort
     Directory = 0x0400
 }
 
+[PublicAPI]
 public struct BTreeHeader
 {
     private const int StructureSize = 16;
@@ -25,23 +27,23 @@ public struct BTreeHeader
     public short NLevels;
     public uint TotalHfsEntries;
 
-    public static unsafe BTreeHeader Load(Stream data)
+    public static unsafe BTreeHeader Load(BinaryReader data)
     {
         BTreeHeader header;
-        header.Magic = data.ReadUInt16Le();
-        header.Flags = (BTreeFlags)data.ReadUInt16Le();
-        header.PageSize = data.ReadUInt16Le();
+        header.Magic = data.ReadUInt16();
+        header.Flags = (BTreeFlags)data.ReadUInt16();
+        header.PageSize = data.ReadUInt16();
 
         var structure = new Span<byte>(header.Structure, StructureSize);
-        data.ReadExactly(structure);
+        data.BaseStream.ReadExactly(structure);
 
-        header.FirstLeaf = data.ReadInt16Le();
-        header.PageSplits = data.ReadInt16Le();
-        header.RootPage = data.ReadInt16Le();
-        header.FirstFree = data.ReadInt16Le();
-        header.TotalPages = data.ReadInt16Le();
-        header.NLevels = data.ReadInt16Le();
-        header.TotalHfsEntries = data.ReadUInt32Le();
+        header.FirstLeaf = data.ReadInt16();
+        header.PageSplits = data.ReadInt16();
+        header.RootPage = data.ReadInt16();
+        header.FirstFree = data.ReadInt16();
+        header.TotalPages = data.ReadInt16();
+        header.NLevels = data.ReadInt16();
+        header.TotalHfsEntries = data.ReadUInt32();
 
         return header;
     }

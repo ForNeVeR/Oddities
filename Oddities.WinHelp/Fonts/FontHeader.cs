@@ -1,7 +1,8 @@
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp.Fonts;
 
+[PublicAPI]
 public struct FontHeader
 {
     public ushort NumFonts;
@@ -9,13 +10,13 @@ public struct FontHeader
     public ushort DefDescriptor;
     public ushort DescriptorsOffset;
 
-    public static FontHeader Read(Stream input)
+    public static FontHeader Read(BinaryReader input)
     {
         FontHeader header;
-        header.NumFonts = input.ReadUInt16Le();
-        header.NumDescriptors = input.ReadUInt16Le();
-        header.DefDescriptor = input.ReadUInt16Le();
-        header.DescriptorsOffset = input.ReadUInt16Le();
+        header.NumFonts = input.ReadUInt16();
+        header.NumDescriptors = input.ReadUInt16();
+        header.DefDescriptor = input.ReadUInt16();
+        header.DescriptorsOffset = input.ReadUInt16();
         return header;
     }
 }

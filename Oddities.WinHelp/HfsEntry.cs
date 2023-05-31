@@ -1,7 +1,8 @@
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp;
 
+[PublicAPI]
 internal enum HfsFileType
 {
     Normal = 0,
@@ -9,16 +10,17 @@ internal enum HfsFileType
     Hfs = 4
 }
 
+[PublicAPI]
 internal struct HfsEntry
 {
     public int ReservedSpace;
     public int UsedSpace;
     public HfsFileType FileType;
 
-    public static HfsEntry Load(Stream input) => new()
+    public static HfsEntry Load(BinaryReader input) => new()
     {
-        ReservedSpace = input.ReadInt32Le(),
-        UsedSpace = input.ReadInt32Le(),
-        FileType = (HfsFileType)input.ReadByteExact()
+        ReservedSpace = input.ReadInt32(),
+        UsedSpace = input.ReadInt32(),
+        FileType = (HfsFileType)input.ReadByte()
     };
 }

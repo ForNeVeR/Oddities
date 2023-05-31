@@ -1,17 +1,20 @@
-﻿namespace Oddities.WinHelp.Topics;
+﻿using JetBrains.Annotations;
 
+namespace Oddities.WinHelp.Topics;
+
+[PublicAPI]
 public struct TopicFile
 {
-    private readonly Stream _data;
+    private readonly BinaryReader _data;
     private readonly TopicBlockHeader _header;
     
-    public TopicFile(Stream data, TopicBlockHeader header)
+    public TopicFile(BinaryReader data, TopicBlockHeader header)
     {
         _data = data;
         _header = header;
     }
 
-    public static TopicFile Load(Stream input)
+    public static TopicFile Load(BinaryReader input)
     {
         var header = TopicBlockHeader.Load(input);
         
@@ -24,7 +27,7 @@ public struct TopicFile
         var ptr = _header.TopicData;
         while (ptr != -1)
         {
-            _data.Position = ptr;
+            _data.BaseStream.Position = ptr;
             var paragraph = Paragraph.Load(_data);
             paragraphs.Add(paragraph);
             ptr = paragraph.NextPara;

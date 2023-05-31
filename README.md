@@ -52,7 +52,8 @@ Here's a complex example of how to read an MRB file, extract SHG from it, then e
 Dib ExtractDibFromWmfInsideMrb(string mrbPath)
 {
     using var stream = new FileStream(mrbPath, FileMode.Open);
-    var file = MrbFile.Load(stream);
+    using var reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+    var file = MrbFile.Load(reader);
     if (file.ImageCount != 1) throw new Exception("Too many images in the file");
     var image = file.ReadImage(0);
     WmfDocument wmf = file.ReadWmfDocument(image);
@@ -84,7 +85,8 @@ Here's an example function that will read all the resources of type `32770u` fro
 Dib[] ReadImagesFromNeFile(string nePath)
 {
     using var stream = new FileStream(nePath, FileMode.Open, FileAccess.Read);
-    var neFile = NeFile.ReadFrom(stream);
+    using var reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+    var neFile = NeFile.ReadFrom(reader);
     var resources = neFile.ReadResourceTable();
     var bitmapResourceType = resources.Single(x => x.TypeId == 32770u);
     return bitmapResourceType.Resources
@@ -114,7 +116,8 @@ The following example demonstrates most of the library's capabilities:
 void DumpWinHelpFile(string hlpPath, string outDir)
 {
     using var input = new FileStream(hlpPath, FileMode.Open, FileAccess.Read);
-    var file = WinHelpFile.Load(input);
+    using var reader = new BinaryReader(input, Encoding.UTF8, leaveOpen: true);
+    var file = WinHelpFile.Load(reader);
     var dibs = new List<Dib>();
     foreach (var entry in file.GetFiles(Encoding.UTF8))
     {
@@ -128,20 +131,21 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         {
             // Here, you could extract DIB from WMF images, but I'm too lazy to update the signature of
             // ExtractDibFromWmfInsideMrb to make it work with bytes. Just imagine it works.
-            
+
             // var dib = ExtractDibFromWmfInsideMrb(bytes);
             // dibs.Add(dib);
         }
         else if (entry.FileName == "|SYSTEM")
         {
             using var stream = new MemoryStream(bytes);
-            var header = SystemHeader.Load(stream);
+            var header = SystemHeader.Load(reader);
             Console.WriteLine(" - SystemHeader ok.");
         }
         else if (entry.FileName == "|FONT")
         {
             using var stream = new MemoryStream(bytes);
-            var fontFile = FontFile.Load(stream);
+            using var fontReader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
+            var fontFile = FontFile.Load(fontReader);
             Console.WriteLine(" - Font ok.");
 
             foreach (var descriptor in fontFile.ReadDescriptors())
@@ -150,7 +154,7 @@ void DumpWinHelpFile(string hlpPath, string outDir)
         else if (entry.FileName == "|TOPIC")
         {
             using var stream = new MemoryStream(bytes);
-            var topic = TopicFile.Load(stream);
+            var topic = TopicFile.Load(reader);
             Console.WriteLine(" - Topic ok.");
 
             var i = 0;

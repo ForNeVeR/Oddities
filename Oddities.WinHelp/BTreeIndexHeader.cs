@@ -1,8 +1,9 @@
 using System.Text;
-using Oddities.StreamUtil;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp;
 
+[PublicAPI]
 public struct BTreeIndexHeader
 {
     public ushort Unused;
@@ -11,13 +12,13 @@ public struct BTreeIndexHeader
     public short NextPage;
     public DirectoryIndexEntry[] Entries;
 
-    public static BTreeIndexHeader Load(Stream data, Encoding fileNameEncoding)
+    public static BTreeIndexHeader Load(BinaryReader data, Encoding fileNameEncoding)
     {
         BTreeIndexHeader header;
-        header.Unused = data.ReadUInt16Le();
-        header.NEntries = data.ReadInt16Le();
-        header.PreviousPage = data.ReadInt16Le();
-        header.NextPage = data.ReadInt16Le();
+        header.Unused = data.ReadUInt16();
+        header.NEntries = data.ReadInt16();
+        header.PreviousPage = data.ReadInt16();
+        header.NextPage = data.ReadInt16();
 
         header.Entries = new DirectoryIndexEntry[header.NEntries];
         for (var i = 0; i < header.NEntries; ++i)
@@ -27,28 +28,30 @@ public struct BTreeIndexHeader
     }
 }
 
+[PublicAPI]
 public struct DirectoryIndexEntry
 {
     public string FileName;
     public int FileOffset;
 
-    public static DirectoryIndexEntry Load(Stream data, Encoding fileNameEncoding)
+    public static DirectoryIndexEntry Load(BinaryReader data, Encoding fileNameEncoding)
     {
-        var start = data.Position;
+        var stream = data.BaseStream;
+        var start = stream.Position;
         while (data.ReadByte() != 0)
         {
         }
-        var end = data.Position;
+        var end = stream.Position;
 
         var buffer = new byte[end - start];
-        data.Position = start;
-        data.ReadExactly(buffer);
+        stream.Position = start;
+        stream.ReadExactly(buffer);
 
         return new DirectoryIndexEntry
         {
             // -1 for terminating zero
             FileName = fileNameEncoding.GetString(buffer, 0, buffer.Length - 1),
-            FileOffset = data.ReadInt32Le()
+            FileOffset = data.ReadInt32()
         };
     }
 }
