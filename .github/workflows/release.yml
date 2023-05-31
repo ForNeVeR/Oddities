@@ -12,6 +12,9 @@ on:
     - cron: '0 0 * * 6'
   workflow_dispatch:
 
+permissions:
+  contents: 'write'
+
 jobs:
   nuget-push:
     runs-on: 'ubuntu-22.04'
