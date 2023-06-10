@@ -1,7 +1,12 @@
-namespace Oddities.Resources
+namespace Oddities
 
 open System
 open System.Buffers.Binary
+
+[<Obsolete("This type has been moved to Oddities.Dib.", false)>]
+type Resources =
+    static member Dib(dib: byte[]) =
+        Dib(dib)
 
 type RGB = (struct(byte * byte * byte))
 
