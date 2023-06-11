@@ -3,11 +3,6 @@ namespace Oddities
 open System
 open System.Buffers.Binary
 
-[<Obsolete("This type has been moved to Oddities.Dib.", false)>]
-type Resources =
-    static member Dib(dib: byte[]) =
-        Dib(dib)
-
 type RGB = (struct(byte * byte * byte))
 
 /// Device-independent bitmap.
@@ -36,7 +31,7 @@ type Dib(dib: byte[]) =
     member val Height = height
     member val Palette = palette
     member val PaletteColorNumber = paletteColorNumber
-                                             
+
     member _.GetPixel(x: int, y: int): RGB =
         let y = height - y - 1 // turn the image upside-down
         if colorDepth = 1us then
@@ -59,10 +54,10 @@ type Dib(dib: byte[]) =
                 else byteValue &&& 0b1111uy
             palette[int paletteIndex]
         elif colorDepth = 8us then
-            let mutable stride = width 
-            if stride % 4 <> 0 then stride <- stride + (4 - stride % 4) 
+            let mutable stride = width
+            if stride % 4 <> 0 then stride <- stride + (4 - stride % 4)
             let rowOffset = y * stride
-            let byteIndex = rowOffset + x 
+            let byteIndex = rowOffset + x
             let byteValue = dib[headerSize + paletteColorNumber * 4 + byteIndex]
             let paletteIndex = byteValue >>> 8
             palette[int paletteIndex]
@@ -82,3 +77,12 @@ type Dib(dib: byte[]) =
             yield! BitConverter.GetBytes pixelDataOffset
             yield! dib.Raw
         |]
+
+namespace Oddities.Resources
+
+open System
+
+/// Device-independent bitmap.
+[<Obsolete("This type has been moved to Oddities.Dib.", false)>]
+type Dib(dib: byte[]) =
+    inherit Oddities.Dib(dib)

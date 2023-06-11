@@ -1,7 +1,7 @@
 ﻿using System.Text;
+using Oddities;
 using Oddities.MRB;
 using Oddities.NE;
-using Oddities.Resources;
 using Oddities.WinHelp;
 using Oddities.WinHelp.Fonts;
 using Oddities.WinHelp.Topics;
