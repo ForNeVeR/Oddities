@@ -4,29 +4,38 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp;
 
 [PublicAPI]
-public struct BTreeIndexHeader
+public readonly record struct BTreeIndexHeader
 {
-    public ushort Unused;
-    public short NEntries;
-    public short PreviousPage;
-    public short NextPage;
-    public DirectoryIndexEntry[] Entries;
+    public readonly ushort Unused;
+    public readonly short NEntries;
+    public readonly short PreviousPage;
+    public readonly short NextPage;
+    public readonly DirectoryIndexEntry[] Entries;
+
+    public BTreeIndexHeader(ushort unused, short nEntries, short previousPage, short nextPage, DirectoryIndexEntry[] entries)
+    {
+        Unused = unused;
+        NEntries = nEntries;
+        PreviousPage = previousPage;
+        NextPage = nextPage;
+        Entries = entries;
+    }
 
     public static BTreeIndexHeader Load(BinaryReader data, Encoding fileNameEncoding)
     {
-        BTreeIndexHeader header;
-        header.Unused = data.ReadUInt16();
-        header.NEntries = data.ReadInt16();
-        header.PreviousPage = data.ReadInt16();
-        header.NextPage = data.ReadInt16();
+        ushort unused = data.ReadUInt16();
+        short nEntries = data.ReadInt16();
+        short previousPage = data.ReadInt16();
+        short nextPage = data.ReadInt16();
 
-        header.Entries = new DirectoryIndexEntry[header.NEntries];
-        for (var i = 0; i < header.NEntries; ++i)
-            header.Entries[i] = DirectoryIndexEntry.Load(data, fileNameEncoding);
+        DirectoryIndexEntry[] entries = new DirectoryIndexEntry[nEntries];
+        for (var i = 0; i < nEntries; ++i)
+            entries[i] = DirectoryIndexEntry.Load(data, fileNameEncoding);
 
-        return header;
+        return new BTreeIndexHeader(unused, nEntries, previousPage, nextPage, entries);
     }
 }
+
 
 [PublicAPI]
 public struct DirectoryIndexEntry
