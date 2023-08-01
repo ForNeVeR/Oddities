@@ -4,14 +4,13 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp;
 
 [PublicAPI]
-public record struct BTreeIndexHeader
+public readonly record struct BTreeIndexHeader
 {
-    ushort Unused;
-    short NEntries;
-    short PreviousPage;
-    short NextPage;
-    public DirectoryIndexEntry[] Entries;
-
+    public readonly ushort Unused;
+    public readonly short NEntries;
+    public readonly short PreviousPage;
+    public readonly short NextPage;
+    public readonly DirectoryIndexEntry[] Entries;
 
     public BTreeIndexHeader(ushort unused, short nEntries, short previousPage, short nextPage, DirectoryIndexEntry[] entries)
     {
