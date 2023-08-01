@@ -6,14 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{276C4B11-F88A-4C2A-971F-CCD0EA9E7859}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
-		LICENSE.md = LICENSE.md
-		README.md = README.md
-		.gitignore = .gitignore
-		MAINTAINERSHIP.md = MAINTAINERSHIP.md
 		Directory.Build.props = Directory.Build.props
-		CHANGELOG.md = CHANGELOG.md
+		LICENSE.md = LICENSE.md
+		MAINTAINERSHIP.md = MAINTAINERSHIP.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{EF058526-C7EE-49BB-9104-3459B7BAA839}"
@@ -24,15 +24,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.MRB", "Oddities.MRB\Oddities.MRB.csproj", "{4FDF05F5-61B1-41EF-884F-CB2A86855FC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oddities.MRB", "Oddities.MRB\Oddities.MRB.csproj", "{4FDF05F5-61B1-41EF-884F-CB2A86855FC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.NE", "Oddities.NE\Oddities.NE.csproj", "{04401361-D9C4-44BA-A0AD-E187C398A7D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oddities.NE", "Oddities.NE\Oddities.NE.csproj", "{04401361-D9C4-44BA-A0AD-E187C398A7D5}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Oddities.DIB", "Oddities.DIB\Oddities.DIB.fsproj", "{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Oddities.DIB", "Oddities.DIB\Oddities.DIB.fsproj", "{6C005755-1B20-4E20-8DAB-462DAD4FEA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.WinHelp", "Oddities.WinHelp\Oddities.WinHelp.csproj", "{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oddities.WinHelp", "Oddities.WinHelp\Oddities.WinHelp.csproj", "{7878A7E9-6CD0-4180-BB33-DD64E45F78F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oddities.Samples", "Oddities.Samples\Oddities.Samples.csproj", "{5178FA98-8E58-4651-8534-AA1F3BB734F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oddities.Samples", "Oddities.Samples\Oddities.Samples.csproj", "{5178FA98-8E58-4651-8534-AA1F3BB734F5}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Oddities.StreamUtil", "Oddities.StreamUtil\Oddities.StreamUtil.shproj", "{71F464ED-1762-4B9B-A292-AF1F6A97B59A}"
 EndProject
@@ -45,12 +45,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{12CFB952-1E87-4BDD-9EB1-E3005CA6B0BC} = {EF058526-C7EE-49BB-9104-3459B7BAA839}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4FDF05F5-61B1-41EF-884F-CB2A86855FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -73,5 +67,16 @@ Global
 		{5178FA98-8E58-4651-8534-AA1F3BB734F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5178FA98-8E58-4651-8534-AA1F3BB734F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5178FA98-8E58-4651-8534-AA1F3BB734F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{12CFB952-1E87-4BDD-9EB1-E3005CA6B0BC} = {EF058526-C7EE-49BB-9104-3459B7BAA839}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Oddities.StreamUtil\Oddities.StreamUtil.projitems*{4fdf05f5-61b1-41ef-884f-cb2a86855fc1}*SharedItemsImports = 5
+		Oddities.StreamUtil\Oddities.StreamUtil.projitems*{71f464ed-1762-4b9b-a292-af1f6a97b59a}*SharedItemsImports = 13
+		Oddities.StreamUtil\Oddities.StreamUtil.projitems*{7878a7e9-6cd0-4180-bb33-dd64e45f78f6}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
