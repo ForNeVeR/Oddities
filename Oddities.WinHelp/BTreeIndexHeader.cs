@@ -4,31 +4,22 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp;
 
 [PublicAPI]
-public  record struct BTreeIndexHeader
+public record struct BTreeIndexHeader(
+    ushort Unused,
+    short NEntries,
+    short PreviousPage,
+    short NextPage,
+    DirectoryIndexEntry[] Entries
+)
 {
-    ushort Unused;
-    short NEntries;
-    short PreviousPage;
-    short NextPage;
-    public  DirectoryIndexEntry[] Entries;
-
-    public BTreeIndexHeader(ushort unused, short nEntries, short previousPage, short nextPage, DirectoryIndexEntry[] entries)
-    {
-        Unused = unused;
-        NEntries = nEntries;
-        PreviousPage = previousPage;
-        NextPage = nextPage;
-        Entries = entries;
-    }
-
     public static BTreeIndexHeader Load(BinaryReader data, Encoding fileNameEncoding)
     {
-        ushort unused = data.ReadUInt16();
-        short nEntries = data.ReadInt16();
-        short previousPage = data.ReadInt16();
-        short nextPage = data.ReadInt16();
+        var unused = data.ReadUInt16();
+        var nEntries = data.ReadInt16();
+        var previousPage = data.ReadInt16();
+        var nextPage = data.ReadInt16();
+        var entries = new DirectoryIndexEntry[nEntries];
 
-        DirectoryIndexEntry[] entries = new DirectoryIndexEntry[nEntries];
         for (var i = 0; i < nEntries; ++i)
             entries[i] = DirectoryIndexEntry.Load(data, fileNameEncoding);
 
