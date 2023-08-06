@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 
 namespace Oddities.WinHelp.Topics;
 
 [PublicAPI]
-public struct TopicFile
+public readonly record struct TopicFile
 {
     private readonly BinaryReader _data;
     private readonly TopicBlockHeader _header;

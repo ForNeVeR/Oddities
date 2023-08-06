@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -13,7 +13,7 @@ public enum ParagraphRecordType : byte
 }
 
 [PublicAPI]
-public struct Paragraph
+public record struct Paragraph
 {
     private BinaryReader Data { get; init; }
     private long DataOffset { get; init; }

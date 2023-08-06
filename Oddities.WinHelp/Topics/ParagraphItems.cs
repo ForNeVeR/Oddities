@@ -42,14 +42,16 @@ public enum BitmapAlignment
 }
 
 [PublicAPI]
-public struct ParagraphSettings
-{
-    public ParagraphSetup Setup;
-    public ParagraphBorder? Border;
+public record struct ParagraphSettings
+(
+ParagraphSetup Setup,
+ParagraphBorder? Border
+)
 
+{
     public static ParagraphSettings Load(BinaryReader data)
     {
-        ParagraphSettings settings;
+        ParagraphSettings settings = new ParagraphSettings();
         settings.Setup = (ParagraphSetup)data.ReadInt32();
         if ((settings.Setup & ParagraphSetup.ParagraphBorder) != 0)
         {

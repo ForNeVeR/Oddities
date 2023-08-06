@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -9,7 +9,7 @@ namespace Oddities.WinHelp;
 /// <para>[2]: P. Davis and M. Wallace — Windows Undocumented File Formats.</para>
 /// </remarks>
 [PublicAPI]
-public struct WinHelpFile
+public record struct WinHelpFile
 {
     private const int Magic = 0x35F3F;
 

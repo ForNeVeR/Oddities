@@ -4,19 +4,21 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp;
 
 [PublicAPI]
-public struct SystemHeader
-{
-    public byte Magic;
-    public byte Version;
-    public byte Revision;
-    public byte Always0;
-    public ushort Always1;
-    public uint GenDate;
-    public ushort Flags;
+public record struct SystemHeader
+(
+       byte Magic,
+       byte Version,
+       byte Revision,
+       byte Always0,
+       ushort Always1,
+       uint GenDate,
+       ushort Flags
+)
 
+{
     public static SystemHeader Load(BinaryReader input)
     {
-        SystemHeader header;
+        SystemHeader header = new SystemHeader();
         header.Magic = input.ReadByte();
         header.Version = input.ReadByte();
         header.Revision = input.ReadByte();
