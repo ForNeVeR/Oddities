@@ -12,14 +12,6 @@
         <Description>WinHelp (.hlp) file format reader for .NET.</Description>
     </PropertyGroup>
 
-    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-      <LangVersion>preview</LangVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-      <LangVersion>preview</LangVersion>
-    </PropertyGroup>-->
-
     <ItemGroup>
         <PackageReference Include="ChangelogAutomation.MSBuild" Version="2.0.0" PrivateAssets="All" />
         <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" PrivateAssets="All" />
