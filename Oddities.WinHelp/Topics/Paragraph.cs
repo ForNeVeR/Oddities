@@ -13,7 +13,7 @@ public enum ParagraphRecordType : byte
 }
 
 [PublicAPI]
-public record struct Paragraph
+public struct Paragraph
 {
     private BinaryReader Data { get; init; }
     private long DataOffset { get; init; }

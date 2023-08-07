@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp.Topics;
 
 [PublicAPI]
-public readonly record struct TopicFile
+public struct TopicFile
 {
     private readonly BinaryReader _data;
     private readonly TopicBlockHeader _header;

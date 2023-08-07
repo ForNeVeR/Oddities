@@ -9,7 +9,7 @@ namespace Oddities.WinHelp;
 /// <para>[2]: P. Davis and M. Wallace — Windows Undocumented File Formats.</para>
 /// </remarks>
 [PublicAPI]
-public record struct WinHelpFile
+public struct WinHelpFile
 {
     private const int Magic = 0x35F3F;
 
