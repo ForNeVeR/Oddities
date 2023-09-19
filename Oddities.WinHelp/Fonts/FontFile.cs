@@ -5,8 +5,8 @@ namespace Oddities.WinHelp.Fonts;
 [PublicAPI]
 public class FontFile
 {
-    private BinaryReader _data;
-    private FontHeader _header;
+    private readonly BinaryReader _data;
+    private readonly FontHeader _header;
     public FontFile(BinaryReader data, FontHeader header)
     {
         _data = data;
