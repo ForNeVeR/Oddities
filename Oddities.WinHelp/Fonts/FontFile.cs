@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Oddities.WinHelp.Fonts;
 
 [PublicAPI]
-public class FontFile
+public sealed class FontFile
 {
     private readonly BinaryReader _data;
     private readonly FontHeader _header;
