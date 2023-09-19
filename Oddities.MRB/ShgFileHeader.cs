@@ -12,17 +12,24 @@ public record struct ShgFileHeader(
     public static ShgFileHeader Read(BinaryReader input)
     {
         Span<byte> magic = stackalloc byte[2];
+
         input.BaseStream.ReadExactly(magic);
+
         if (!magic.SequenceEqual("lp"u8)) throw new Exception("Unexpected magic bytes");
 
-        ShgFileHeader header = new ShgFileHeader();
-        header.ObjectCount = input.ReadInt16();
-        header.ObjectOffsets = new uint[header.ObjectCount];
-        for (var i = 0; i < header.ObjectCount; i++)
+        var objectCount = input.ReadInt16();
+        var objectOffsets = new uint[objectCount];
+
+        for (var i = 0; i < objectCount; i++)
         {
-            header.ObjectOffsets[i] = input.ReadUInt32();
+            objectOffsets[i] = input.ReadUInt32();
         }
-        return header;
+
+        return new()
+        {
+            ObjectCount = objectCount,
+            ObjectOffsets = objectOffsets,
+        };
     }
 
 

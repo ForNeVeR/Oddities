@@ -12,10 +12,11 @@ public record struct TopicBlockHeader
 {
     public static TopicBlockHeader Load(BinaryReader input)
     {
-        TopicBlockHeader header = new TopicBlockHeader();
-        header.LastParagraph = input.ReadInt32();
-        header.TopicData = input.ReadInt32();
-        header.LastTopicHeader = input.ReadInt32();
-        return header;
+        return new()
+        {
+            LastParagraph = input.ReadInt32(),
+            TopicData = input.ReadInt32(),
+            LastTopicHeader = input.ReadInt32()
+        };
     }
 }

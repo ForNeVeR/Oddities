@@ -51,8 +51,11 @@ ParagraphBorder? Border
 {
     public static ParagraphSettings Load(BinaryReader data)
     {
-        ParagraphSettings settings = new ParagraphSettings();
-        settings.Setup = (ParagraphSetup)data.ReadInt32();
+        ParagraphSettings settings = new()
+        {
+            Setup = (ParagraphSetup)data.ReadInt32()
+        };
+
         if ((settings.Setup & ParagraphSetup.ParagraphBorder) != 0)
         {
             var header = data.ReadByte();
@@ -71,7 +74,7 @@ ParagraphBorder? Border
 }
 
 [PublicAPI]
-public interface IParagraphItem {}
+public interface IParagraphItem { }
 
 [PublicAPI]
 public record struct ParagraphText(string Text) : IParagraphItem;
@@ -92,9 +95,9 @@ public record struct Bitmap(BitmapAlignment Alignment, ushort Number) : IParagra
     {
         var subtype = input.ReadByte();
         if (subtype != 0x22) throw new Exception("Bitmap types other than 0x22 are not supported.");
-        if (input.ReadByte() != 0x08)  throw new Exception("Bitmap should've been followed by a byte 0x08.");
-        if (input.ReadByte() != 0x80)  throw new Exception("Bitmap should've been followed by a byte 0x08.");
-        if (input.ReadByte() != 0x02)  throw new Exception("Bitmap should've been followed by a byte 0x02.");
+        if (input.ReadByte() != 0x08) throw new Exception("Bitmap should've been followed by a byte 0x08.");
+        if (input.ReadByte() != 0x80) throw new Exception("Bitmap should've been followed by a byte 0x08.");
+        if (input.ReadByte() != 0x02) throw new Exception("Bitmap should've been followed by a byte 0x02.");
 
         var embedFlag = input.ReadUInt16();
         if (embedFlag == 1) throw new Exception("Embedded bitmaps are not supported, yet.");

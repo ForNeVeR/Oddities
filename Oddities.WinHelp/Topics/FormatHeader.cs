@@ -13,10 +13,11 @@ public record struct FormatHeader
 {
     public static FormatHeader Read(BinaryReader input)
     {
-        FormatHeader header = new FormatHeader();
-        header.FormatSize = input.ReadCompressedUInt16();
-        header.Flags = input.ReadByte();
-        header.DataSize = input.ReadCompressedUInt16();
-        return header;
+        return new()
+        {
+            FormatSize = input.ReadCompressedUInt16(),
+            Flags = input.ReadByte(),
+            DataSize = input.ReadCompressedUInt16()
+        };
     }
 }

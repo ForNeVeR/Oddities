@@ -18,14 +18,16 @@ public record struct SystemHeader
 {
     public static SystemHeader Load(BinaryReader input)
     {
-        SystemHeader header = new SystemHeader();
-        header.Magic = input.ReadByte();
-        header.Version = input.ReadByte();
-        header.Revision = input.ReadByte();
-        header.Always0 = input.ReadByte();
-        header.Always1 = input.ReadByte();
-        header.GenDate = input.ReadUInt32();
-        header.Flags = input.ReadUInt16();
+        SystemHeader header = new()
+        {
+            Magic = input.ReadByte(),
+            Version = input.ReadByte(),
+            Revision = input.ReadByte(),
+            Always0 = input.ReadByte(),
+            Always1 = input.ReadByte(),
+            GenDate = input.ReadUInt32(),
+            Flags = input.ReadUInt16()
+        };
 
         if (header.Magic != 0x6C)
             throw new Exception(
