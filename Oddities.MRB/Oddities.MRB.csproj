@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ChangelogAutomation.MSBuild" Version="3.0.2" PrivateAssets="All"/>
+        <PackageReference Include="ChangelogAutomation.MSBuild" Version="3.0.3" PrivateAssets="All"/>
         <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" PrivateAssets="All"/>
         <PackageReference Include="Oxage.Wmf" Version="0.6.1"/>
     </ItemGroup>
