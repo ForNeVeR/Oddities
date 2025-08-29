@@ -14,7 +14,7 @@
 
     <ItemGroup>
         <PackageReference Include="ChangelogAutomation.MSBuild" Version="3.0.3" PrivateAssets="All" />
-        <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" PrivateAssets="All" />
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.1" PrivateAssets="All" />
     </ItemGroup>
 
     <Import Project="..\Oddities.StreamUtil\Oddities.StreamUtil.projitems" Label="Shared" />
