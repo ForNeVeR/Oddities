@@ -42,7 +42,7 @@ byte[] DibSample(byte[] input)
 
 Oddities.MRB [![NuGet][badge.mrb]][nuget.mrb]
 ------------
-This library supports reading of [MRB (Multi-Resolution Bitmap)][file-info.mrb] and [SHG (Segmented Hyper-Graphics)][file-info.shg] image formats. Most often, these files are encountered during reading of `.HLP` files using Oddities.WilHelp.
+This library supports reading of [MRB (Multi-Resolution Bitmap)][file-info.mrb] and [SHG (Segmented Hyper-Graphics)][file-info.shg] image formats. Most often, these files are encountered during reading of `.HLP` files using Oddities.WinHelp.
 
 This library has been extracted into a separate package mainly because of different dependencies: it uses a third-party package to read WMF files (that may be part of SHG).
 
