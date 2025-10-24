@@ -52,7 +52,7 @@ jobs:
           output: ./release-notes.md
 
       - name: 'Upload the workflow artifacts'
-        uses: 'actions/upload-artifact@v4'
+        uses: 'actions/upload-artifact@v5'
         with:
           name: 'Oddities v${{ steps.version.outputs.version }}'
           path: |
