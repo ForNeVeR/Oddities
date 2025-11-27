@@ -22,7 +22,7 @@ jobs:
           - name: 'linux'
             image: 'ubuntu-24.04'
           - name: 'windows'
-            image: 'windows-2022'
+            image: 'windows-2025'
 
     name: main.${{ matrix.config.name }}
     runs-on: ${{ matrix.config.image }}
