@@ -41,7 +41,7 @@ jobs:
       - name: Set up .NET SDK
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '7.0.x'
+          dotnet-version: '10.0.401'
 
       - name: Prepare NuGet packages
         run: dotnet pack --configuration Release -p:Version=${{ steps.version.outputs.version }}

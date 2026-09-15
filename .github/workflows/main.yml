@@ -46,7 +46,7 @@ jobs:
       - name: Set up .NET SDK
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 10.0.401
 
       - name: Build
         run: dotnet build
